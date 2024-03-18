@@ -17,8 +17,10 @@
  *    shallowCopy({a: 2, b: { a: [1, 2, 3]}}) => {a: 2, b: { a: [1, 2, 3]}}
  *    shallowCopy({}) => {}
  */
-function shallowCopy(/* obj */) {
-  throw new Error('Not implemented');
+function shallowCopy(obj) {
+  const newObj = {};
+  Object.assign(newObj, obj);
+  return newObj;
 }
 
 /**
@@ -147,8 +149,21 @@ function makeWord(lettersObject) {
  *    sellTickets([25, 25, 50]) => true
  *    sellTickets([25, 100]) => false (The seller does not have enough money to give change.)
  */
-function sellTickets(/* queue */) {
-  throw new Error('Not implemented');
+function sellTickets(queue) {
+  const ticketPrice = 25;
+
+  // Use reduce to calculate the total money from the queue
+  const totalMoney = queue.reduce((acc, bill) => {
+    // Check if the seller can give change for the current bill
+    if (bill < ticketPrice) {
+      return false; // Return false immediately if the seller cannot give change
+    }
+    // Subtract the ticket price from the total money
+    return acc + bill - ticketPrice;
+  }, 0);
+
+  // Check if the total money is negative, which means the seller does not have enough money to give change
+  return totalMoney >= 0;
 }
 
 /**
